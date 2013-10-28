@@ -1,3 +1,4 @@
+from django.core import serializers
 from models import Review, Vote
 from toilet.models import Toilet
 import json
@@ -25,7 +26,6 @@ def add(request):
     else:
         error += 'No POST data in request.\n'
         status = 415
-
     return HttpResponse(package_error(response,error), status=status)
 
 
@@ -36,9 +36,15 @@ def get(request):
     status = 200
     
     if request.method == 'POST':
-        print request
-        data = request.POST
-        review_set = Review.objects.filter(toilet=data['toilet_id'])
+        print request.POST.keys()[0]
+        data = json.loads(str(request.POST.keys()[0]))
+
+        try:
+            filters = data['filters']            
+            review_set = Review.objects.filter(**filters)
+        except:
+            review_set = Review.objects.all()
+
         count = len(list(review_set))
         
         total = 0.0

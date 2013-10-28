@@ -55,7 +55,8 @@ var numToiletsLoaded = 0;
 var toiletsLoading = false;
 loadTemplate("/static/handlebars/toilet.html", "toilet");
 function loadToiletListings(div_id, i, filter){
-    
+    filter = filter || {}
+    i = i || 0;
     console.log(filter);
     if(name === undefined) console.log("undef name");
     if(toiletsLoading) return; 
@@ -70,6 +71,7 @@ function loadToiletListings(div_id, i, filter){
     toiletsLoading = true;
 
    //Appendable parameters to send to tapi
+   console.log(filter);
    var params = {
       // This is not correct right now, keep this FAULT in mind. numToiletsLoaded + i = "0+undefined"
       noun: "toilet", verb: "retrieve", data: {start : numToiletsLoaded, end : numToiletsLoaded + i },
@@ -91,7 +93,6 @@ function loadToiletListings(div_id, i, filter){
    //append filter arguments to params.data
    if(filter !== undefined){
       jQuery.extend(params.data, filter);
-      console.log(params.data + "  woop");
    }
    console.log(params.data);
    
