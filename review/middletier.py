@@ -36,7 +36,6 @@ def get(request):
     status = 200
     
     if request.method == 'POST':
-        print request
         data = request.POST
         review_set = Review.objects.filter(toilet=data['toilet_id'])
         count = len(list(review_set))

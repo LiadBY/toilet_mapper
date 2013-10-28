@@ -12,7 +12,10 @@ class Toilet (models.Model):
     date = models.DateTimeField()
     creator = models.ForeignKey(User)
     name = models.CharField(max_length = 64)
-    #zip = django.contrib.localflavor.USpostalCodeField()
+    
+    lat = models.DecimalField(null=True,max_digits=10,decimal_places=6)
+    long = models.DecimalField(null=True,max_digits=10,decimal_places=6)
+
     
 admin.site.register(Toilet)
         
