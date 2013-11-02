@@ -1,0 +1,70 @@
+/*<<<<<<< HEAD
+    $(document).ready(function(){
+
+        // Load and populate the reviews 
+        var toilet_id = {{ t.pk }};
+        var template = Handlebars.compile($('#review-template').html());
+
+        //Loads or reloads the reviews from the server
+        window.loadReviews = function(){
+            tapi({noun: "review", verb: "retrieve", data: {toilet_id: toilet_id, start : 0, end : 10},
+                  callback: function(d){
+                      $('#reviews').html('');
+                      $('.num_reviews').html(d.count+' Reviews');
+                      $('#review-rating').html(generateStars(d.total));
+
+                      var data = d.review_set; 
+                      var topReview = {rank: 0, content: ''};
+                      for(o in data){
+                          if(topReview.rank < data[o].fields.rank){
+                              topReview = data[o].fields;
+                          }
+                          data[o].fields.stars = generateStars(data[o].fields.rank);
+                          data[o].fields.date = data[o].fields.date.slice(0, 10);
+                          data[o].fields.pk = data[o].pk;
+                          $('#reviews').append(template(data[o].fields));
+                      }
+                      $('#review-top-comment').html('"' + topReview.content.slice(0, 50) +'..."');		     
+                      bind_vote_buttons();
+                  }});
+        } //function loadReviews
+        loadReviews();
+
+        //Bind the bathroom rating form so it submits correctly
+        tapi_auto_form('rate-bathroom-form', 
+                       {  noun: "review"
+                          , verb: "create"
+                          , callback :function(data){
+                              $('#leaveReview').slideUp();
+                              loadReviews();
+                          }});
+
+        // Load and populate Flags Interface 
+        var flag_rank_template = Handlebars.compile($('#flag-rank-template').html());
+        var flag_ifc_template = Handlebars.compile($('#flag-ifc-template').html());
+        var flagdata = {};
+        
+        // Load / reload the rankings for flags for this toilet 
+        window.load_flag_rankings = function(){
+            console.log("LOADING FLAG RANKINGS");
+            tapi({
+	        noun: "flag"
+	        , verb: "retrieve_rankings"
+	        , data : { toilet_pk: toilet_id }
+                , callback: function(data){
+                    if(data.length === 0) return;
+                    $('#flag-rankings').show();
+                    $('#flag-rankings').html('<h3>Restroom Flags</h3>');
+                    for(o in data){
+                        var obj = {
+                            pk: data[o].pk
+                            ,fields: flagdata[data[o].fields.flag]
+                            ,flag_pk: data[o].fields.flag
+                            ,up_down_vote: data[o].fields.up_down_vote
+                        }
+                        $('#flag-rankings').append(flag_rank_template(obj));
+                    }
+                    bind_flagvote_buttons();
+                }
+            });
+=======*/

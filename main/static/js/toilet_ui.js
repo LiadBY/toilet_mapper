@@ -82,7 +82,6 @@ function loadToiletListings(div_id, i, filter){
     template = getTemplate("toilet");
     toiletsLoading = true;
 
-    i = i || 10;
 
     //Appendable parameters to send to tapi
     var params = {
