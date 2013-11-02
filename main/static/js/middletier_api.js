@@ -51,7 +51,7 @@
 **/
 
 function simple_post(url, data){
-    return $.ajax({ url: url, type: 'POST', data: data, dataType: 'json'});
+    return $.ajax({ url: url, type: 'POST', data: JSON.stringify(data), dataType: 'json' });
 }
 
 function simple_handler(url){
@@ -88,6 +88,7 @@ function tapi_error(e){ throw ("tAPI error: " + e); }
 function server_error(responseText, errorThrown){ alert("Server error: "+errorThrown); }
 
 function tapi(params, callback){
+    console.log(params);
     if(!params.noun){ tapi_error("Request made with no noun."); }
     if(!params.verb){ tapi_error("Request made with no verb."); }
     if(!internal_mapping.hasOwnProperty(params.noun)){

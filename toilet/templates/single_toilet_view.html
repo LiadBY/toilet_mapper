@@ -3,6 +3,7 @@
 {% block endhead %}
 
 <script>
+<<<<<<< HEAD
     $(document).ready(function(){
 
         /** Load and populate the reviews **/
@@ -71,6 +72,33 @@
                     bind_flagvote_buttons();
                 }
             });
+=======
+  $(document).ready(function(){
+  var toilet_id = {{ t.pk }};
+  var template = Handlebars.compile($('#review-template').html());
+
+  //Loads or reloads the reviews from the server
+  window.loadReviews = function(){
+   tapi({noun: "review", verb: "retrieve", data: {start : 0, end : 10, filters : {toilet_id : toilet_id }},
+      callback: function(d){
+        $('#reviews').html('');
+        $('.num_reviews').html(d.count+' Reviews');
+        $('#review-rating').html(generateStars(d.total));
+
+
+        var data = d.review_set; 
+        console.log(data);
+        var topReview = {rank: 0, content: ''};
+        for(o in data){
+          if(topReview.rank < data[o].fields.rank){
+            topReview = data[o].fields;
+          }
+          console.log(data[o]);
+          data[o].fields.stars = generateStars(data[o].fields.rank);
+          data[o].fields.date = data[o].fields.date.slice(0, 10);
+          data[o].fields.pk = data[o].pk;
+          $('#reviews').append(template(data[o].fields));
+>>>>>>> update_filters
         }
 
         // Load data for all flags (and call load_flag_rankings())

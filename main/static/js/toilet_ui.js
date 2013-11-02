@@ -69,6 +69,11 @@ var numToiletsLoaded = 0;
 var toiletsLoading = false;
 loadTemplate("/static/handlebars/toilet.html", "toilet");
 function loadToiletListings(div_id, i, filter){
+    filter = filter || {}
+    i = i || 0;
+    console.log(filter);
+    if(name === undefined) console.log("undef name");
+
     if(toiletsLoading) return; 
     if(!isTemplateLoaded("toilet")){
 	setTimeout("loadToiletListings('"+div_id+"', '"+i+"', "+JSON.stringify(filter)+" );", 50);
